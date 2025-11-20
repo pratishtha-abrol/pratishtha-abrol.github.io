@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
+/* --- Editorial design tokens (B/D hybrid) --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-background: #ffffff;
+  --color-foreground: #0e0e0e;
+  --color-subtle: #444444;
+  --color-muted: #6f6f6f;
+  --color-border: #dfdfdf;
+  --color-highlight: #b48a62;
+
+  --text-display: 54px;
+  --text-h1: 38px;
+  --text-h2: 28px;
+  --text-h3: 22px;
+  --text-body: 18px;
+  --text-small: 14px;
+  --text-mini: 12px;
+
+  --space-xxl: 180px;
+  --space-xl: 130px;
+  --space-lg: 88px;
+  --space-md: 52px;
+  --space-sm: 30px;
+  --space-xs: 14px;
+
+  --w-container-wide: 1200px;
+  --w-container: 960px;
+  --w-container-narrow: 700px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* Adapt to dark mode if you want later */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-background: #0a0a0a;
+    --color-foreground: #ededed;
   }
 }
 
+/* Base page */
+html, body, #__next {
+  height: 100%;
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Use the fonts provided by next/font via CSS variables */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* small helpers to use tokens easily */
+:root {
+  --space-lg: var(--space-lg);
+  --space-xl: var(--space-xl);
+  --space-md: var(--space-md);
+}
+
+/* Optional utility classes (use sparingly) */
+.lead {
+  font-size: var(--text-body);
+  color: var(--color-subtle);
+  line-height: 1.6;
+}
+
+/* Make image galleries and figures breathe */
+figure {
+  margin: 0;
 }

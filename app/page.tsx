@@ -1,15 +1,6 @@
 export default function Home() {
   return (
     <div className="min-h-screen w-full font-serif">
-      {/* HEADER */}
-      <header className="w-full border-b py-6 px-6 flex justify-between items-center uppercase tracking-wide text-sm">
-        <div className="font-bold text-xl tracking-tight">Pratishtha Abrol</div>
-        <nav className="flex gap-6 text-sm">
-          <a href="#blog" className="hover:opacity-60">Blog</a>
-          <a href="#about" className="hover:opacity-60">About</a>
-          <a href="#contact" className="hover:opacity-60">Contact</a>
-        </nav>
-      </header>
 
       {/* HERO */}
       <section id="home" className="px-6 py-20 max-w-6xl mx-auto">
@@ -53,14 +44,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="w-full border-t py-10 px-6 text-sm text-gray-600">
-        <div className="max-w-6xl mx-auto flex justify-between">
-          <p>© 2025 Pratishtha Abrol — Editorial</p>
-          <p className="uppercase tracking-wide">Evolving in public</p>
-        </div>
-      </footer>
     </div>
   );
 }
