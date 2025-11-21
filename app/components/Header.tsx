@@ -22,7 +22,7 @@ export default function Header() {
         <Link href="/" className="inline-block">
           <span
             className="font-medium text-lg tracking-tight"
-            style={{ letterSpacing: "0.06em" }}
+            style={{ letterSpacing: "0.1em" }}
             aria-label="Pratishtha Abrol — Home"
           >
             PRATISHTHA ABROL

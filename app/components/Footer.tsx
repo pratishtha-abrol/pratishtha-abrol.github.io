@@ -23,20 +23,23 @@ export default function Footer() {
           <span className="uppercase tracking-wider text-xs font-semibold">Follow</span>
 
           {/* Replace `yourusername` with your actual handles */}
-          <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
-            Instagram
-          </a>
-          <a href="https://youtube.com/@yourusername" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
-            YouTube
-          </a>
-          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
+          <a href="https://www.linkedin.com/in/pratishtha-abrol/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
             LinkedIn
           </a>
-          <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
+          <a href="https://github.com/pratishtha-abrol" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
+            Github
+          </a>
+          <a href="https://www.instagram.com/pratishthaabrol/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
+            Instagram
+          </a>
+          <a href="https://www.youtube.com/@pratishthaabrol" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
+            YouTube
+          </a>
+          <a href="https://x.com/_pratishthaa" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
             X / Twitter
           </a>
-          <a href="https://tiktok.com/@yourusername" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
-            TikTok
+          <a href="https://substack.com/@pratishthaabrol/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
+            Substack
           </a>
         </div>
       </div>
