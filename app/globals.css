@@ -29,13 +29,13 @@
   --w-container-narrow: 700px;
 }
 
-/* Adapt to dark mode if you want later */
+/* Adapt to dark mode if you want later
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #0a0a0a;
     --color-foreground: #ededed;
   }
-}
+} */
 
 /* Base page */
 html, body, #__next {

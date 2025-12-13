@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "npx serve@latest out",
     "predeploy": "npm run build && echo > out/.nojekyll",
-    "deploy": "gh-pages -d out -b gh-pages --dotfiles"
+    "deploy": "gh-pages -d out -b gh-pages --dotfiles -u \"Pratishtha Abrol <pratishthaabrol@gmail.com>\""
   },
   "dependencies": {
     "next": "16.0.3",
