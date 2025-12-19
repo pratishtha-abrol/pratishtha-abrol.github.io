@@ -31,8 +31,10 @@ export default function Header() {
 
         {/* Nav */}
         <nav aria-label="Primary" className="hidden md:flex gap-8 uppercase text-sm tracking-wider">
-          <Link href="/blog" className="hover:opacity-70">Blog</Link>
-          <Link href="/about" className="hover:opacity-70">About</Link>
+          <Link href="/writes" className="hover:opacity-70">Writing Blog</Link>
+          <div className="border-l border-black h-4 self-center" />
+          <Link href="/tech" className="hover:opacity-70">For the Tech Enthusiasts</Link>
+          <div className="border-l border-black h-4 self-center" />
           <Link href="/contact" className="hover:opacity-70">Contact</Link>
         </nav>
       </div>
