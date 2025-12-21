@@ -7,7 +7,7 @@ const posts = [
     category: "Philosophy",
     author: "Pratishtha Abrol",
     date: "14 December 2025",
-    href: "https://your-substack-link-1",
+    href: "https://substack.com/home/post/p-182151090",
     image: "/posts/eyes.jpeg",
   },
 ];
