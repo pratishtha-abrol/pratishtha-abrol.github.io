@@ -6,18 +6,22 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/pratishtha-abrol/',
   github: 'https://github.com/pratishtha-abrol',
   calendar: null as string | null, // Calendly / Cal.com link
-  scholar: null as string | null, // Google Scholar or ORCID
-  responseTime: null as string | null, // e.g. "two working days"
-  resumes: { infra: '/resume/Pratishtha_CV.pdf', backend: null, ai: null } as Record<'infra' | 'backend' | 'ai', string | null>,
+  scholar: 'https://scholar.google.com/citations?hl=en&user=2qBrbjwAAAAJ' as string | null,
+  orcid: 'https://orcid.org/0009-0001-1581-2226' as string | null,
+  responseTime: 'two working days' as string | null,
+  resumes: { infra: '/resume/Pratishtha_CV.pdf', backend: null, ai: null, research: '/resume/Pratishtha_Research_CV.pdf' } as Record<
+    'infra' | 'backend' | 'ai' | 'research',
+    string | null
+  >,
   paper: {
     doi: 'https://doi.org/10.1140/epjd/s10053-025-00955-6',
     arxiv: 'https://arxiv.org/abs/2404.01212',
   },
   thesisPdf: null as string | null,
-  researchTools: null as string | null,
-  certs: { ckaInProgress: false },
+  researchTools: 'Python · Qiskit · Cirq · Mathematica' as string | null,
+  certs: { ckaInProgress: true },
   crucible: {
-    repo: null as string | null,
+    repo: 'https://github.com/pratishtha-abrol/crucible' as string | null,
     writeup: null as string | null,
     benchmarks: {
       ttftP95: null as string | null,

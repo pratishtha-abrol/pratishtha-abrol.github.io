@@ -93,8 +93,10 @@ const areas: Array<[string, string]> = [
       leadMax={620}
       buttons={[{ label: 'LinkedIn', href: site.linkedin }]}
       links={[
-        ...(site.scholar ? [{ label: 'Google Scholar / ORCID ↗', href: site.scholar }] : []),
+        ...(site.scholar ? [{ label: 'Google Scholar ↗', href: site.scholar }] : []),
+        ...(site.orcid ? [{ label: 'ORCID ↗', href: site.orcid }] : []),
         { label: 'GitHub ↗', href: site.github },
+        ...(site.resumes.research ? [{ label: 'Résumé (PDF) ↗', href: site.resumes.research }] : []),
         { label: 'All work →', href: '/' },
       ]}
     />
