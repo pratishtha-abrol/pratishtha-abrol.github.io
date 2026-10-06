@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+import StatStrip from '../components/StatStrip.astro';
+import Section from '../components/Section.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CaseStudyCard from '../components/CaseStudyCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import KeyValueStrip from '../components/KeyValueStrip.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { site } from '../data/site';
+import { services } from '../data/services';
+import { backendFeatured, backendProjects } from '../data/projects';
+import { backendStats, backendStack } from '../data/proof';
+
+const resume = site.resumes.backend;
+---
+
+<BaseLayout
+  title="Pratishtha Abrol — Backend & Full-stack"
+  description="Backend and full-stack engineer: APIs, data models and billing logic that stay correct under concurrency. Python, Go, Node and React."
+  accent="#7CC4FA"
+>
+  <Nav
+    suffix="/backend"
+    links={[
+      { label: 'Work', href: '#work' },
+      { label: 'Services', href: '#services' },
+      { label: 'Infra', href: '/infra/' },
+      { label: 'AI infra', href: '/ai/' },
+      { label: 'Research', href: '/research/' },
+    ]}
+  />
+  <main>
+    <Hero eyebrow="BACKEND & FULL-STACK" h1Max={900}>
+      Backends that stay <span class="accent">correct</span> when things get concurrent.
+      <Fragment slot="lead">
+        APIs, data models and business logic for products with real users and real money moving through them. Python, Go
+        and Node on the server; React when the product needs a front end.
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="#work">See the work</Button>
+        {resume && <Button href={resume} variant="secondary">Download résumé</Button>}
+      </Fragment>
+    </Hero>
+
+    <StatStrip stats={backendStats} />
+
+    <Section id="work">
+      <SectionHeader eyebrow="01 / SELECTED WORK" title="Things I've built and shipped." />
+      <CaseStudyCard project={backendFeatured} />
+      <div class="cards">
+        {backendProjects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </Section>
+
+    <Section id="services">
+      <SectionHeader eyebrow="02 / SERVICES" title="How I can help." />
+      <div class="cards">
+        {services.backend.map((s) => <ServiceCard service={s} compact />)}
+      </div>
+    </Section>
+
+    <Section label="Stack" top={56} bottom={24} flow="block">
+      <KeyValueStrip items={backendStack} basis={220} ruled />
+    </Section>
+
+    <ContactCTA
+      heading="Building something that has to get the details right?"
+      lead="Freelance builds, long-term contracts, or full-time remote backend roles."
+      headingMax={720}
+      links={[
+        { label: 'LinkedIn ↗', href: site.linkedin },
+        { label: 'GitHub ↗', href: site.github },
+        { label: 'All work →', href: '/' },
+      ]}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+</style>

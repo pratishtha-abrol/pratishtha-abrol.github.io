@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import PublicationCard from '../components/PublicationCard.astro';
+import KeyValueStrip from '../components/KeyValueStrip.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { site } from '../data/site';
+import { publications, keyResults, thesis, researchAreas } from '../data/publications';
+
+const areas: Array<[string, string]> = [
+  ['RESEARCH AREAS', researchAreas.areas],
+  ['GRADUATE COURSEWORK', researchAreas.coursework],
+  ...(site.researchTools ? [['TOOLS', site.researchTools] as [string, string]] : []),
+];
+---
+
+<BaseLayout
+  title="Pratishtha Abrol — Quantum Information Research"
+  description="Quantum information research: secret sharing, teleportation and Bell nonlocality in three-qubit systems. Published in EPJ D, 2025."
+  accent="#F2B866"
+>
+  <Nav
+    suffix="/research"
+    links={[
+      { label: 'Publication', href: '#publication' },
+      { label: 'Thesis', href: '#thesis' },
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+    ]}
+  />
+  <main>
+    <Hero eyebrow="RESEARCH · QUANTUM INFORMATION" h1Max={900} leadMax={680}>
+      When can a quantum state <span class="accent">keep a secret?</span>
+      <Fragment slot="lead">
+        During my MS by Research at the Centre for Quantum Science and Technology, IIIT Hyderabad, I studied how three
+        parties sharing entanglement can split and rebuild a quantum secret, and what that reveals about teleportation and
+        Bell nonlocality.
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href={site.paper.doi}>Read the paper</Button>
+        <Button href={site.paper.arxiv} variant="secondary">arXiv preprint</Button>
+      </Fragment>
+    </Hero>
+
+    <Section id="publication" top={24} gap={32}>
+      <Eyebrow>01 / PUBLICATION</Eyebrow>
+      {publications.map((p) => <PublicationCard publication={p} />)}
+      <div class="results-head"><h3>Key results</h3></div>
+      <div class="cards">
+        {keyResults.map((r, i) => (
+          <article class="result">
+            <div class="num">{String(i + 1).padStart(2, '0')}</div>
+            <h4>{r.title}</h4>
+            <p>{r.body}</p>
+          </article>
+        ))}
+      </div>
+    </Section>
+
+    <Section id="thesis" top={72} flow="block">
+      <div class="thesis">
+        <div class="thesis-head">
+          <Eyebrow>02 / THESIS</Eyebrow>
+          <div class="thesis-meta">{thesis.meta}</div>
+        </div>
+        <div class="thesis-body">
+          <h2>{thesis.title}</h2>
+          <p>{thesis.summary}</p>
+          <div class="links">
+            <a href={thesis.summaryLink.href}>{thesis.summaryLink.label}</a>
+            {site.thesisPdf && <a href={site.thesisPdf}>Thesis PDF ↗</a>}
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <Section label="Research areas" top={56} bottom={24} flow="block">
+      <KeyValueStrip items={areas} basis={300} ruled />
+    </Section>
+
+    <ContactCTA
+      top={80}
+      heading="Working on quantum software or research engineering?"
+      lead="I'm open to research-engineering roles and collaborations where formal depth meets production systems."
+      headingMax={760}
+      leadMax={620}
+      buttons={[{ label: 'LinkedIn', href: site.linkedin }]}
+      links={[
+        ...(site.scholar ? [{ label: 'Google Scholar / ORCID ↗', href: site.scholar }] : []),
+        { label: 'GitHub ↗', href: site.github },
+        { label: 'All work →', href: '/' },
+      ]}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .results-head {
+    padding-top: 16px;
+  }
+  h3 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .result {
+    flex: 1 1 300px;
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  h4 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 600;
+  }
+  .result p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .thesis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--r-feature);
+    padding: clamp(24px, 4vw, 48px);
+  }
+  .thesis-head {
+    flex: 1 1 260px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .thesis-meta {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+  .thesis-body {
+    flex: 999 1 480px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .thesis-body h2 {
+    font-size: 28px;
+    line-height: 1.25;
+    font-weight: 700;
+  }
+  .thesis-body p {
+    color: var(--text-muted);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 15px;
+  }
+</style>

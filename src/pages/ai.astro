@@ -1,0 +1,246 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import ArchitectureFlow from '../components/ArchitectureFlow.astro';
+import KeyValueStrip from '../components/KeyValueStrip.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { site } from '../data/site';
+import { services } from '../data/services';
+import { crucible, mlPipelines } from '../data/projects';
+
+const resume = site.resumes.ai;
+const b = site.crucible.benchmarks;
+// Benchmark row: only the values that are known; the whole row hides if none are.
+const benchmarks = (
+  [
+    ['P95 TIME TO FIRST TOKEN', b.ttftP95],
+    ['GATEWAY OVERHEAD', b.overhead],
+    ['COST PER 1M TOKENS', b.costPer1M],
+  ] as Array<[string, string | null]>
+).filter((x): x is [string, string] => x[1] !== null);
+const crucibleLinks = [
+  ...(site.crucible.repo ? [{ label: 'Repository ↗', href: site.crucible.repo }] : []),
+  ...(site.crucible.writeup ? [{ label: 'Benchmark write-up ↗', href: site.crucible.writeup }] : []),
+];
+---
+
+<BaseLayout
+  title="Pratishtha Abrol — AI Infrastructure"
+  description="AI infrastructure: serving, scaling and observing models in production. Kubernetes and SRE experience, open-source ML pipelines and a research background."
+  accent="#C4A7FF"
+>
+  <Nav
+    suffix="/ai"
+    links={[
+      { label: 'Crucible', href: '#crucible' },
+      { label: 'Research', href: '/research/' },
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+    ]}
+  />
+  <main>
+    <Hero eyebrow="AI INFRASTRUCTURE" h1Max={920} leadMax={660}>
+      The unglamorous part of AI: <span class="accent">serving it reliably.</span>
+      <Fragment slot="lead">
+        Models are only useful when they're fast, observable and affordable in production. I bring Kubernetes and SRE
+        experience to model serving, plus open-source ML pipeline work and a research background.
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="#crucible">See Crucible</Button>
+        {resume && <Button href={resume} variant="secondary">Download résumé</Button>}
+      </Fragment>
+    </Hero>
+
+    <Section id="crucible" top={48} gap={32}>
+      <div class="intro">
+        <div class="eyebrow-row">
+          <Eyebrow>01 / FEATURED PROJECT</Eyebrow>
+          <span class="badge">{crucible.status}</span>
+        </div>
+        <h2>{crucible.title}</h2>
+        <p>{crucible.lead}</p>
+      </div>
+      <ArchitectureFlow flow={crucible.flow} />
+      <div class="cards">
+        {crucible.features.map((f) => (
+          <div class="feature">
+            <h3>{f.title}</h3>
+            <p>{f.body}</p>
+          </div>
+        ))}
+      </div>
+      {benchmarks.length > 0 && <KeyValueStrip items={benchmarks} basis={220} ruled pad={24} />}
+      {crucibleLinks.length > 0 && (
+        <div class="buttons">
+          {crucibleLinks.map((l) => <Button href={l.href} variant="secondary" size="sm">{l.label}</Button>)}
+        </div>
+      )}
+    </Section>
+
+    <Section top={72} gap={32}>
+      <SectionHeader eyebrow="02 / ML PIPELINES" title="Open-source ML infrastructure." />
+      <div class="cards">
+        {mlPipelines.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </Section>
+
+    <Section id="research" top={72} flow="block">
+      <div class="research">
+        <div class="research-head">
+          <Eyebrow>03 / RESEARCH</Eyebrow>
+          <h2>Comfortable with formal depth.</h2>
+        </div>
+        <div class="research-body">
+          <p>
+            MS by Research at IIIT Hyderabad's Centre for Quantum Science and Technology. I can read papers, reason about
+            proofs, and turn ideas into working systems.
+          </p>
+          <a href={site.paper.doi} class="paper">
+            <span class="paper-title">Maximal Secret Reconstruction, Teleportation and Bell's Inequality ↗</span>
+            <span class="paper-meta">The European Physical Journal D · 79, 11 · 2025</span>
+          </a>
+          <a href="/research/" class="more">Full research page →</a>
+        </div>
+      </div>
+    </Section>
+
+    <Section label="Services" top={72} bottom={24} gap={28}>
+      <Eyebrow>04 / HOW I CAN HELP</Eyebrow>
+      <div class="cards">
+        {services.ai.map((s) => <ServiceCard service={s} compact />)}
+      </div>
+    </Section>
+
+    <ContactCTA
+      top={80}
+      heading="Shipping an AI feature that needs to survive real traffic?"
+      lead="Freelance projects, long-term contracts, or full-time remote AI infrastructure and MLOps roles."
+      headingMax={720}
+      links={[
+        { label: 'LinkedIn ↗', href: site.linkedin },
+        { label: 'GitHub ↗', href: site.github },
+        { label: 'All work →', href: '/' },
+      ]}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 760px;
+  }
+  .eyebrow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-pill);
+    padding: 2px 10px;
+  }
+  h2 {
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .intro p {
+    color: var(--text-muted);
+  }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .feature {
+    flex: 1 1 240px;
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .feature h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .feature p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .research {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--r-feature);
+    padding: clamp(24px, 4vw, 48px);
+  }
+  .research-head {
+    flex: 1 1 280px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .research-head h2 {
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+  .research-body {
+    flex: 999 1 460px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .research-body p {
+    color: var(--text-muted);
+  }
+  .paper {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+  }
+  .paper-title {
+    font-weight: 600;
+  }
+  .paper-meta {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+  .more {
+    font-size: 15px;
+  }
+</style>
