@@ -8,7 +8,7 @@ export const site = {
   calendar: null as string | null, // Calendly / Cal.com link
   scholar: null as string | null, // Google Scholar or ORCID
   responseTime: null as string | null, // e.g. "two working days"
-  resumes: { infra: null, backend: null, ai: null } as Record<'infra' | 'backend' | 'ai', string | null>,
+  resumes: { infra: '/resume/Pratishtha_CV.pdf', backend: null, ai: null } as Record<'infra' | 'backend' | 'ai', string | null>,
   paper: {
     doi: 'https://doi.org/10.1140/epjd/s10053-025-00955-6',
     arxiv: 'https://arxiv.org/abs/2404.01212',

@@ -7,7 +7,7 @@ import { join } from 'node:path';
 
 const chrome = process.env.CHROME ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const pages = [
-  { file: 'index', title: 'Engineer', accent: '#6EE7A8', path: '' },
+  { file: 'index', title: 'Pratishtha Abrol', accent: '#6EE7A8', path: '' },
   { file: 'infra', title: 'Platform & Reliability Engineer', accent: '#6EE7A8', path: '/infra' },
   { file: 'backend', title: 'Backend & Full-stack', accent: '#7CC4FA', path: '/backend' },
   { file: 'ai', title: 'AI Infrastructure', accent: '#C4A7FF', path: '/ai' },
@@ -26,7 +26,7 @@ h1{margin:0;font-size:84px;line-height:1.05;letter-spacing:-0.02em;max-width:980
 .rule{width:120px;height:6px;background:${accent};margin-top:40px}
 </style></head><body><div class="card">
 <div class="logo">pratishtha<span class="dot">.</span>abrol<span class="path">${path}</span></div>
-<div><div class="name">Pratishtha Abrol</div><h1>${title.replace(/&/g, '&amp;')}</h1><div class="rule"></div></div>
+<div>${title === "Pratishtha Abrol" ? "" : '<div class="name">Pratishtha Abrol</div>'}<h1>${title.replace(/&/g, '&amp;')}</h1><div class="rule"></div></div>
 </div></body></html>`;
 
 const dir = join(tmpdir(), 'og-gen');
