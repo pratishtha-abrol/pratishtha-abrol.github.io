@@ -11,6 +11,8 @@ interface Props {
 
 const { title, description, accent = '#6EE7A8', ogImage } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const fontsHref =
+  'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap';
 const image = ogImage ? new URL(ogImage, Astro.site) : undefined;
 ---
 
@@ -38,10 +40,14 @@ const image = ogImage ? new URL(ogImage, Astro.site) : undefined;
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Non-blocking font CSS: text renders in the fallback stack first (display=swap). -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      href={fontsHref}
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
     <slot name="head" />
   </head>
   <body style={`--accent: ${accent}`}>
