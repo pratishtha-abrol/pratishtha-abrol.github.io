@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Page not found — Pratishtha Abrol" description="This page doesn't exist. Head back to the home page.">
+  <meta slot="head" name="robots" content="noindex" />
+  <Nav
+    links={[
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+      { label: 'Research', href: '/research/' },
+    ]}
+  />
+  <main>
+    <Hero eyebrow="404" size="hub" top={112} bottom={112} h1Max={920}>
+      That page isn't <span class="accent">here.</span>
+      <Fragment slot="lead">The link may be old or mistyped. The home page has everything.</Fragment>
+      <Button slot="actions" href="/">Back to home</Button>
+    </Hero>
+  </main>
+  <Footer />
+</BaseLayout>
