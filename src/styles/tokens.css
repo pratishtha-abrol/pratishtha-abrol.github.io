@@ -1,0 +1,35 @@
+:root {
+  /* Surfaces */
+  --bg: #0E1116;
+  --surface: #161B22;
+  --surface-alt: #12161C;
+  --border: #232A35;
+  --border-strong: #3A4352;
+  --border-pill: #2A3240;
+
+  /* Text */
+  --text: #E6EAF0;
+  --text-body: #D3D9E2;
+  --text-muted: #B4BDC9;
+  --text-subtle: #8C96A5;
+  --on-accent: #0E1116;
+
+  /* Accent: overridden per page by BaseLayout */
+  --accent: #6EE7A8;
+
+  /* Type */
+  --font-sans: 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Layout */
+  --container: 1120px;
+  --gutter: 24px;
+
+  /* Radii */
+  --r-button: 8px;
+  --r-node: 10px;
+  --r-card: 14px;
+  --r-feature: 16px;
+  --r-panel: 20px;
+  --r-pill: 999px;
+}
