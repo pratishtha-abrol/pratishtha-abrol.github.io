@@ -16,7 +16,7 @@ const { id, eyebrow, size = 'default', top = 96, bottom = 72, h1Max, leadMax = 6
 const hasAside = Astro.slots.has('aside');
 ---
 
-<section id={id} class={`hero ${hasAside ? 'split' : 'single'}`} style={`--pt:${top}px;--pb:${bottom}px`}>
+<section id={id} class={`hero ${hasAside ? 'with-aside' : 'single'}`} style={`--pt:${top}px;--pb:${bottom}px`}>
   <div class="main">
     <slot name="pill" />
     {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
@@ -33,13 +33,13 @@ const hasAside = Astro.slots.has('aside');
     margin: 0 auto;
     padding: var(--pt) var(--gutter) var(--pb);
   }
-  .split {
+  .with-aside {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 56px;
   }
-  .split .main {
+  .with-aside .main {
     flex: 999 1 520px;
     min-width: 0;
   }

@@ -10,14 +10,14 @@ const { command, rows } = Astro.props;
   <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="body">
     <div class="cmd"><span class="accent">$</span> {command}</div>
-    <dl class="grid">
+    <div class="grid">
       {rows.map(([k, v], i) => (
         <>
-          <dt>{k}</dt>
-          <dd class:list={{ accent: i === rows.length - 1 }}>{v}</dd>
+          <span class="key">{k}</span>
+          <span class:list={{ accent: i === rows.length - 1 }}>{v}</span>
         </>
       ))}
-    </dl>
+    </div>
   </div>
 </div>
 
@@ -57,12 +57,8 @@ const { command, rows } = Astro.props;
     grid-template-columns: 120px minmax(0, 1fr);
     gap: 6px 12px;
     padding-top: 8px;
-    margin: 0;
   }
-  dt {
+  .key {
     color: var(--text-subtle);
-  }
-  dd {
-    margin: 0;
   }
 </style>

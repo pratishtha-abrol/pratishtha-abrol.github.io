@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import StatusPill from '../components/StatusPill.astro';
+import Button from '../components/Button.astro';
+import TerminalCard from '../components/TerminalCard.astro';
+import StatStrip from '../components/StatStrip.astro';
+import Section from '../components/Section.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import TimelineRow from '../components/TimelineRow.astro';
+import ArchitectureFlow from '../components/ArchitectureFlow.astro';
+import PostList from '../components/PostList.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { site } from '../data/site';
+import { experience } from '../data/experience';
+import { services } from '../data/services';
+import { ferrum, alsoProjects } from '../data/projects';
+import { infraStats, infraTerminal } from '../data/proof';
+import { posts } from '../data/posts';
+
+const hasPosts = posts.length > 0;
+const certs = [...(site.certs.ckaInProgress ? ['CKA (in progress)'] : []), ...alsoProjects.certs];
+const lead = `Freelance projects, long-term contracts, or full-time remote roles.${
+  site.responseTime ? ` I usually reply within ${site.responseTime}.` : ''
+}`;
+const resume = site.resumes.infra;
+---
+
+<BaseLayout
+  title="Pratishtha Abrol — Platform & Reliability Engineer"
+  description="Platform and reliability engineer: faster, compliant, reliable Kubernetes systems. Previously cluster infrastructure at Oracle. Available for remote work."
+  accent="#6EE7A8"
+>
+  <Nav
+    suffix="/infra"
+    links={[
+      { label: 'Services', href: '#services' },
+      { label: 'Ferrum', href: '#ferrum' },
+      ...(hasPosts ? [{ label: 'Writing', href: '#writing' }] : []),
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+      { label: 'Research', href: '/research/' },
+    ]}
+  />
+  <main>
+    <Hero id="top" size="split" leadMax={600}>
+      <StatusPill slot="pill">Available for remote roles &amp; freelance</StatusPill>
+      I make Kubernetes systems faster, compliant, and <span class="accent">reliable.</span>
+      <Fragment slot="lead">
+        Platform &amp; reliability engineer. Previously built cluster infrastructure at Oracle. B.Tech + MS by Research
+        from IIIT Hyderabad.
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="#services">See how I can help</Button>
+        {resume && <Button href={resume} variant="secondary">Download résumé</Button>}
+      </Fragment>
+      <TerminalCard slot="aside" command="kubectl describe engineer pratishtha" rows={infraTerminal} />
+    </Hero>
+
+    <StatStrip stats={infraStats} />
+
+    <Section id="services" top={96}>
+      <SectionHeader
+        eyebrow="01 / SERVICES"
+        title="Clear scope, fixed outcome."
+        lead="For startups and small teams who need production infrastructure done properly, without hiring a full-time platform team yet."
+        max={680}
+      />
+      <div class="cards">
+        {services.infra.map((s) => <ServiceCard service={s} />)}
+      </div>
+      <p class="note">
+        Looking for a full-time or long-term contract engineer instead? <a href="#contact" class="accent">I'm open to that too.</a>
+      </p>
+    </Section>
+
+    <Section id="work" top={80}>
+      <SectionHeader eyebrow="02 / EXPERIENCE" title="Where I've shipped." />
+      <div>
+        {experience.map((e, i) => <TimelineRow entry={e} last={i === experience.length - 1} />)}
+      </div>
+    </Section>
+
+    <Section id="ferrum" top={80} gap={36}>
+      <SectionHeader eyebrow="03 / CASE STUDY" title={ferrum.title} lead={ferrum.lead} max={720} />
+      <ArchitectureFlow flow={ferrum.flow} />
+      <div class="cols">
+        {ferrum.columns.map((c) => (
+          <div class="col">
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="buttons">
+        {ferrum.links.map((l) => <Button href={l.href} variant="secondary" size="sm">{l.label}</Button>)}
+      </div>
+    </Section>
+
+    <Section id={hasPosts ? 'writing' : 'also'} top={80} flow="wrap" gap={56}>
+      {hasPosts && (
+        <div class="writing">
+          <SectionHeader eyebrow="04 / WRITING" title="Notes from breaking things." />
+          <PostList posts={posts} />
+        </div>
+      )}
+      <aside class="also">
+        <div class="also-label">ALSO</div>
+        <div class="item">
+          <a href={alsoProjects.shellC.href} class="item-link">{alsoProjects.shellC.label}</a>
+          <p>{alsoProjects.shellC.body}</p>
+        </div>
+        <div class="item">
+          <a href={site.paper.doi} class="item-link">Published research ↗</a>
+          <p>
+            <em>Maximal Secret Reconstruction, Teleportation and Bell's Inequality</em>, EPJ D 79, 11 (2025).
+          </p>
+        </div>
+        <div class="item">
+          <span class="item-title">Certifications</span>
+          <p>{certs.join(' · ')}</p>
+        </div>
+      </aside>
+    </Section>
+
+    <ContactCTA
+      eyebrow={`${hasPosts ? '05' : '04'} / CONTACT`}
+      heading="Have infrastructure that needs to hold up? Let's talk."
+      lead={lead}
+      pad={72}
+      headingMax={760}
+      leadMax={620}
+      links={[
+        { label: 'LinkedIn ↗', href: site.linkedin },
+        { label: 'GitHub ↗', href: site.github },
+        ...(resume ? [{ label: 'Résumé (PDF) ↗', href: resume }] : []),
+      ]}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .note {
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+  .cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .col {
+    flex: 1 1 300px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .col h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .col p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .writing {
+    flex: 999 1 520px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .also {
+    flex: 1 1 300px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .also-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+    letter-spacing: 0.08em;
+    padding-top: 6px;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .item-link {
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .item-title {
+    font-weight: 600;
+  }
+  .item p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+</style>

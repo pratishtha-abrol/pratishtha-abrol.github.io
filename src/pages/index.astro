@@ -1,12 +1,68 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import StatusPill from '../components/StatusPill.astro';
+import Section from '../components/Section.astro';
+import Band from '../components/Band.astro';
+import LensCard from '../components/LensCard.astro';
+import KeyValueStrip from '../components/KeyValueStrip.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { site } from '../data/site';
+import { lenses, background } from '../data/lenses';
+import { posts } from '../data/posts';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: 'Platform & Reliability Engineer',
+  url: Astro.site?.href,
+  sameAs: [site.linkedin, site.github],
+};
 ---
 
 <BaseLayout
   title="Pratishtha Abrol — Engineer"
-  description="Pratishtha Abrol builds backend and infrastructure systems that hold up."
+  description="Backend and infrastructure engineer: Kubernetes, backends, AI infrastructure and quantum information research. Pick the lens that fits."
 >
-  <main class="container">
-    <h1>Pratishtha Abrol</h1>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Nav
+    links={[
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+      { label: 'Research', href: '/research/' },
+    ]}
+  />
+  <main>
+    <Hero size="hub" top={112} bottom={64} h1Max={920}>
+      <StatusPill slot="pill">Open to remote roles, contracts &amp; freelance</StatusPill>
+      I build backend and infrastructure systems that <span class="accent">hold up.</span>
+      <Fragment slot="lead">
+        Hi, I'm Pratishtha. I've built cluster infrastructure at Oracle, production backends for paying clients, and ML
+        pipeline components for TensorFlow. Pick the lens that fits what you need.
+      </Fragment>
+    </Hero>
+
+    <Section label="Choose a focus" top={16} bottom={80} flow="wrap" gap={20}>
+      {lenses.map((lens) => <LensCard lens={lens} />)}
+    </Section>
+
+    <Band label="Background">
+      <KeyValueStrip items={background} basis={200} />
+    </Band>
+
+    <ContactCTA
+      heading="Not sure which fits? Just tell me the problem."
+      lead="Freelance projects, long-term contracts, or full-time remote roles."
+      links={[
+        { label: 'LinkedIn ↗', href: site.linkedin },
+        { label: 'GitHub ↗', href: site.github },
+        ...(posts.length > 0 ? [{ label: 'Writing ↗', href: '/writing/' }] : []),
+      ]}
+    />
   </main>
+  <Footer />
 </BaseLayout>
