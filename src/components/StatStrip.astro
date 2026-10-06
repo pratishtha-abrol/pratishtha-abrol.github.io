@@ -1,0 +1,37 @@
+---
+import Band from './Band.astro';
+import type { Stat } from '../data/proof';
+
+interface Props {
+  stats: Stat[];
+}
+const { stats } = Astro.props;
+---
+
+<Band label="Results">
+  {stats.map((s) => (
+    <div class="stat">
+      <div class="value">{s.value}</div>
+      <div class="caption">{s.caption}</div>
+    </div>
+  ))}
+</Band>
+
+<style>
+  .stat {
+    flex: 1 1 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .value {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+  .caption {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+</style>

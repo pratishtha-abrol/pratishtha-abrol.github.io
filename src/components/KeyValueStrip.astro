@@ -1,0 +1,43 @@
+---
+interface Props {
+  items: Array<[label: string, value: string]>;
+  /** flex-basis of each column in px. */
+  basis?: number;
+  /** Top and bottom rules (stand-alone strips); omit inside a Band. */
+  ruled?: boolean;
+  pad?: number;
+}
+const { items, basis = 220, ruled = false, pad = 28 } = Astro.props;
+---
+
+<div class:list={['strip', { ruled }]} style={`--basis:${basis}px;--pad:${pad}px`}>
+  {items.map(([label, value]) => (
+    <div class="item"><span class="label">{label}</span><span>{value}</span></div>
+  ))}
+</div>
+
+<style>
+  .strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 48px;
+    font-size: 15px;
+  }
+  .strip.ruled {
+    padding: var(--pad) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .item {
+    flex: 1 1 var(--basis);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    letter-spacing: 0.08em;
+  }
+</style>

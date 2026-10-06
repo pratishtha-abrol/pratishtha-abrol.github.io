@@ -1,0 +1,81 @@
+---
+import Button from './Button.astro';
+import Eyebrow from './Eyebrow.astro';
+import { site } from '../data/site';
+import type { Link } from '../data/types';
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  lead: string;
+  /** Extra secondary buttons shown after the calendar button. */
+  buttons?: Link[];
+  /** Plain link row under the buttons. */
+  links: Link[];
+  top?: number;
+  /** Panel padding upper bound in px (clamp max). */
+  pad?: number;
+  headingMax?: number;
+  leadMax?: number;
+}
+
+const { eyebrow, heading, lead, buttons = [], links, top = 96, pad = 64, headingMax = 720, leadMax = 600 } = Astro.props;
+const secondary = [...(site.calendar ? [{ label: 'Book a 20-min intro call', href: site.calendar }] : []), ...buttons];
+---
+
+<section id="contact" class="section" style={`--pt:${top}px`}>
+  <div class="panel" style={`--pad:clamp(32px, 6vw, ${pad}px)`}>
+    {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+    <h2 style={`max-width:${headingMax}px`}>{heading}</h2>
+    <p style={`max-width:${leadMax}px`}>{lead}</p>
+    <div class="buttons">
+      <Button href={`mailto:${site.email}`}>{site.email}</Button>
+      {secondary.map((b) => <Button href={b.href} variant="secondary">{b.label}</Button>)}
+    </div>
+    <div class="links">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--pt) var(--gutter) 80px;
+  }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-panel);
+    padding: var(--pad);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  h2 {
+    font-size: clamp(2rem, 4.2vw, 3rem);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  p {
+    color: var(--text-muted);
+  }
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    font-size: 15px;
+    padding-top: 8px;
+  }
+  .links a {
+    color: var(--text-muted);
+    padding: 10px 0;
+  }
+</style>

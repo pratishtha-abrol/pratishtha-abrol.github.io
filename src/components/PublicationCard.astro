@@ -1,0 +1,65 @@
+---
+import type { Publication } from '../data/publications';
+
+interface Props {
+  publication: Publication;
+}
+const { publication: p } = Astro.props;
+---
+
+<article class="card">
+  <div class="journal">{p.journal}</div>
+  <h2>{p.title}</h2>
+  <p class="authors">
+    {p.authors.map((a, i) => (
+      <>
+        {i > 0 && ', '}
+        {a === p.owner ? <strong>{a}</strong> : a}
+      </>
+    ))}
+  </p>
+  <p class="summary">{p.summary}</p>
+  <div class="links">
+    {p.links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </div>
+</article>
+
+<style>
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-feature);
+    padding: clamp(24px, 4vw, 44px);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .journal {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  .authors {
+    color: var(--text-body);
+    font-size: 16px;
+  }
+  strong {
+    color: var(--text);
+  }
+  .summary {
+    color: var(--text-muted);
+    max-width: 820px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 15px;
+    padding-top: 4px;
+  }
+</style>

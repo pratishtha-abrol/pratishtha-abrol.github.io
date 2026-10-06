@@ -1,0 +1,54 @@
+---
+import type { ProjectCard } from '../data/projects';
+
+interface Props {
+  project: ProjectCard;
+}
+const { project } = Astro.props;
+---
+
+<article class="card">
+  <div class="meta">{project.meta}</div>
+  <h3>{project.title}</h3>
+  <p>{project.summary}</p>
+  {project.links.length > 0 && (
+    <div class="links">
+      {project.links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </div>
+  )}
+</article>
+
+<style>
+  .card {
+    flex: 1 1 320px;
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-feature);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+  h3 {
+    font-size: 21px;
+    font-weight: 600;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .links {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 15px;
+  }
+</style>

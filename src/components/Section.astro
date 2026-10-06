@@ -1,0 +1,36 @@
+---
+interface Props {
+  id?: string;
+  label?: string;
+  /** Vertical padding in px, matching the reference per section. */
+  top?: number;
+  bottom?: number;
+  /** column: flex column with gap; wrap: flex row-wrap with gap; block: no flex. */
+  flow?: 'column' | 'wrap' | 'block';
+  gap?: number;
+}
+
+const { id, label, top = 96, bottom = 40, flow = 'column', gap = 40 } = Astro.props;
+---
+
+<section id={id} aria-label={label} class={`section ${flow}`} style={`--pt:${top}px;--pb:${bottom}px;--gap:${gap}px`}>
+  <slot />
+</section>
+
+<style>
+  .section {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--pt) var(--gutter) var(--pb);
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+  }
+</style>

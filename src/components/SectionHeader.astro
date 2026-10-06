@@ -1,0 +1,34 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  max?: number;
+}
+const { eyebrow, title, lead, max } = Astro.props;
+---
+
+<div class="header" style={max ? `max-width:${max}px` : undefined}>
+  <Eyebrow>{eyebrow}</Eyebrow>
+  <h2>{title}</h2>
+  {lead && <p>{lead}</p>}
+</div>
+
+<style>
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  h2 {
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  p {
+    color: var(--text-muted);
+  }
+</style>

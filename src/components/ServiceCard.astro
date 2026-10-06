@@ -1,0 +1,72 @@
+---
+import type { Service } from '../data/services';
+
+interface Props {
+  service: Service;
+  /** Tighter gap/smaller summary used on the AI page. */
+  compact?: boolean;
+}
+const { service, compact = false } = Astro.props;
+
+// Hide the footer line when both values are null; show a single one alone.
+const footer = [service.timeline, service.priceFrom ? `from ${service.priceFrom}` : null].filter(Boolean).join(' · ');
+---
+
+<article class:list={['card', { compact }]}>
+  <h3>{service.title}</h3>
+  <p>{service.summary}</p>
+  {service.bullets && (
+    <ul>
+      {service.bullets.map((b) => <li>{b}</li>)}
+    </ul>
+  )}
+  {footer && <div class="foot">{footer}</div>}
+</article>
+
+<style>
+  .card {
+    flex: 1 1 300px;
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .compact {
+    gap: 12px;
+  }
+  h3 {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .compact h3 {
+    font-size: 21px;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+  .compact p {
+    font-size: 15px;
+  }
+  ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text-body);
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .foot {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+</style>

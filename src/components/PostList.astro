@@ -1,0 +1,45 @@
+---
+import type { PostSummary } from '../data/posts';
+
+interface Props {
+  posts: PostSummary[];
+}
+const { posts } = Astro.props;
+---
+
+<div class="list">
+  {posts.map((p, i) => (
+    <a href={p.href} class:list={['post', { last: i === posts.length - 1 }]}>
+      <span class="title">{p.title}</span>
+      <span class="date">{p.date}</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .list {
+    display: flex;
+    flex-direction: column;
+  }
+  .post {
+    text-decoration: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+  }
+  .last {
+    border-bottom: 1px solid var(--border);
+  }
+  .title {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .date {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+</style>

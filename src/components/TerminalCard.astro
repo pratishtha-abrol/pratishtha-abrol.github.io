@@ -1,0 +1,68 @@
+---
+interface Props {
+  command: string;
+  rows: Array<[key: string, value: string]>;
+}
+const { command, rows } = Astro.props;
+---
+
+<div class="card">
+  <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="body">
+    <div class="cmd"><span class="accent">$</span> {command}</div>
+    <dl class="grid">
+      {rows.map(([k, v], i) => (
+        <>
+          <dt>{k}</dt>
+          <dd class:list={{ accent: i === rows.length - 1 }}>{v}</dd>
+        </>
+      ))}
+    </dl>
+  </div>
+</div>
+
+<style>
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .dots {
+    display: flex;
+    gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--r-pill);
+    background: var(--border-strong);
+  }
+  .body {
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .cmd {
+    color: var(--text-muted);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 6px 12px;
+    padding-top: 8px;
+    margin: 0;
+  }
+  dt {
+    color: var(--text-subtle);
+  }
+  dd {
+    margin: 0;
+  }
+</style>

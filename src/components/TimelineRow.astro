@@ -1,0 +1,53 @@
+---
+import RichText from './RichText.astro';
+import type { Experience } from '../data/experience';
+
+interface Props {
+  entry: Experience;
+  last?: boolean;
+}
+const { entry, last = false } = Astro.props;
+---
+
+<div class:list={['row', { last }]}>
+  <div class="dates">{entry.dates}</div>
+  <div class="content">
+    <h3>{entry.title}</h3>
+    <p><RichText parts={entry.body} /></p>
+  </div>
+</div>
+
+<style>
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 40px;
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+  }
+  .last {
+    border-bottom: 1px solid var(--border);
+  }
+  .dates {
+    flex: 0 0 200px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-subtle);
+    padding-top: 4px;
+  }
+  .content {
+    flex: 999 1 480px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h3 {
+    font-size: 21px;
+    font-weight: 600;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+</style>

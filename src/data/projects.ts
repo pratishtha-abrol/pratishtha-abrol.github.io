@@ -74,7 +74,7 @@ export const ferrum = {
     main: [
       { label: 'Sender' },
       { label: 'FastAPI gateway', key: true },
-      { label: 'Redis queue', key: true },
+      { label: 'Redis queue' },
       { label: 'Async worker', key: true },
       { label: 'Endpoint' },
     ],
@@ -120,8 +120,8 @@ export const crucible = {
     main: [
       { label: 'Client · OpenAI SDK' },
       { label: 'Go gateway', key: true },
-      { label: 'Router · canary', key: true },
-      { label: 'Model servers' },
+      { label: 'Router · canary' },
+      { label: 'Model servers', key: true },
     ],
     supporting: [
       'Redis · token rate limits',

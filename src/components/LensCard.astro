@@ -1,0 +1,56 @@
+---
+import type { Lens } from '../data/lenses';
+
+interface Props {
+  lens: Lens;
+}
+const { lens } = Astro.props;
+---
+
+<a href={lens.href} class="card">
+  <div class="path">{lens.path}</div>
+  <h2>{lens.title}</h2>
+  <p>{lens.summary}</p>
+  <div class="foot">{lens.footer}</div>
+</a>
+
+<style>
+  .card {
+    flex: 1 1 220px;
+    min-width: 0;
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-feature);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .card:hover {
+    border-color: var(--border-strong);
+  }
+  .path {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  h2 {
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+  .foot {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+</style>

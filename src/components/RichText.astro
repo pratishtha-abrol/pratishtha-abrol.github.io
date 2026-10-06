@@ -1,0 +1,10 @@
+---
+import type { RichText } from '../data/types';
+
+interface Props {
+  parts: RichText;
+}
+const { parts } = Astro.props;
+---
+
+{parts.map((part) => (typeof part === 'string' ? part : <a href={part.href}>{part.text}</a>))}

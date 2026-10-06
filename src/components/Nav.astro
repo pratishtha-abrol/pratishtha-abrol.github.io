@@ -1,0 +1,71 @@
+---
+import type { Link } from '../data/types';
+
+interface Props {
+  /** Grey path suffix after the logo on lens pages, e.g. "/infra". */
+  suffix?: string;
+  links: Link[];
+}
+const { suffix, links } = Astro.props;
+---
+
+<header>
+  <nav class="nav" aria-label="Main">
+    <a href="/" class="logo">pratishtha<span class="accent">.</span>abrol{suffix && <span class="suffix">{suffix}</span>}</a>
+    <div class="links">
+      {links.map((l) => <a href={l.href} class="link">{l.label}</a>)}
+      <a href="#contact" class="cta">Get in touch</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 20px var(--gutter);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .suffix {
+    color: var(--text-subtle);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+    font-size: 15px;
+  }
+  .link {
+    text-decoration: none;
+    color: var(--text-muted);
+    padding: 10px 0;
+  }
+  .link:hover {
+    color: var(--text);
+  }
+  .cta {
+    text-decoration: none;
+    color: var(--on-accent);
+    background: var(--accent);
+    padding: 10px 18px;
+    border-radius: var(--r-button);
+    font-weight: 600;
+  }
+  .cta:hover {
+    color: var(--on-accent);
+  }
+</style>

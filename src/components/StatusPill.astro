@@ -1,0 +1,25 @@
+<div class="pill">
+  <span class="dot"></span>
+  <span><slot /></span>
+</div>
+
+<style>
+  .pill {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-pill);
+    border-radius: var(--r-pill);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--r-pill);
+    background: var(--accent);
+  }
+</style>

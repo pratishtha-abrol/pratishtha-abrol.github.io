@@ -1,0 +1,81 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  /** hub: larger H1; split: H1 beside an aside; default: lens pages. */
+  size?: 'hub' | 'split' | 'default';
+  top?: number;
+  bottom?: number;
+  h1Max?: number;
+  leadMax?: number;
+}
+
+const { id, eyebrow, size = 'default', top = 96, bottom = 72, h1Max, leadMax = 640 } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+
+<section id={id} class={`hero ${hasAside ? 'split' : 'single'}`} style={`--pt:${top}px;--pb:${bottom}px`}>
+  <div class="main">
+    <slot name="pill" />
+    {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+    <h1 class={size} style={h1Max ? `max-width:${h1Max}px` : undefined}><slot /></h1>
+    <p class="lead" style={`max-width:${leadMax}px`}><slot name="lead" /></p>
+    <div class="actions"><slot name="actions" /></div>
+  </div>
+  {hasAside && <div class="aside"><slot name="aside" /></div>}
+</section>
+
+<style>
+  .hero {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--pt) var(--gutter) var(--pb);
+  }
+  .split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 56px;
+  }
+  .split .main {
+    flex: 999 1 520px;
+    min-width: 0;
+  }
+  .aside {
+    flex: 1 1 340px;
+    min-width: 0;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 5.4vw, 4.25rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  h1.split {
+    font-size: clamp(2.5rem, 5.2vw, 4.25rem);
+  }
+  h1.hub {
+    font-size: clamp(2.6rem, 6vw, 4.75rem);
+    line-height: 1.03;
+    letter-spacing: -0.025em;
+  }
+  .lead {
+    font-size: 20px;
+    color: var(--text-muted);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .actions:empty {
+    display: none;
+  }
+</style>

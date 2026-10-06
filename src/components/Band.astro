@@ -1,0 +1,27 @@
+---
+// Full-bleed --surface-alt strip with top/bottom borders.
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<section aria-label={label} class="band">
+  <div class="inner"><slot /></div>
+</section>
+
+<style>
+  .band {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-alt);
+  }
+  .inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 40px var(--gutter);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+</style>

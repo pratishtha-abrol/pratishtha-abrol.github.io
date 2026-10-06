@@ -1,0 +1,66 @@
+---
+import type { ArchitectureFlow } from '../data/projects';
+
+interface Props {
+  flow: ArchitectureFlow;
+}
+const { flow } = Astro.props;
+---
+
+<div class="box" role="group" aria-label="Architecture diagram">
+  <div class="main">
+    {flow.main.map((node, i) => (
+      <>
+        {i > 0 && <div class="arrow" aria-hidden="true">→</div>}
+        <div class:list={['node', { key: node.key }]}>{node.label}</div>
+      </>
+    ))}
+  </div>
+  <div class="support">
+    {flow.supporting.map((s) => <div class="node dashed">{s}</div>)}
+  </div>
+</div>
+
+<style>
+  .box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: 32px;
+    overflow-x: auto;
+  }
+  .main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 760px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .support {
+    display: flex;
+    gap: 14px;
+    min-width: 760px;
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+  .node {
+    flex: 1 1 0;
+    text-align: center;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-node);
+    padding: 16px 10px;
+  }
+  .key {
+    border-color: var(--accent);
+  }
+  .dashed {
+    border-style: dashed;
+    padding: 12px 10px;
+  }
+  .arrow {
+    color: var(--text-subtle);
+  }
+</style>
