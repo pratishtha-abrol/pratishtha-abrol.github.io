@@ -6,7 +6,7 @@ compatibility_date = "2026-09-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "pa-site-stats"
-database_id = "REPLACE_WITH_D1_ID"
+database_id = "76fad2b2-6b0f-4b7a-8d38-11a9db673273"
 
 # Sundays 03:30 UTC = 09:00 IST.
 [triggers]
