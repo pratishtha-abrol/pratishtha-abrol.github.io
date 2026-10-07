@@ -1,0 +1,25 @@
+name = "pa-site-stats"
+main = "src/index.ts"
+compatibility_date = "2026-09-01"
+
+# Create with `npx wrangler d1 create pa-site-stats`, then paste the id here.
+[[d1_databases]]
+binding = "DB"
+database_name = "pa-site-stats"
+database_id = "REPLACE_WITH_D1_ID"
+
+# Sundays 03:30 UTC = 09:00 IST.
+[triggers]
+crons = ["30 3 * * SUN"]
+
+[vars]
+# Browsers from these origins may call the Worker.
+ALLOWED_ORIGINS = "https://pratishtha-abrol.github.io,https://pratishthaabrol.me,https://www.pratishthaabrol.me"
+# Hostnames of the site itself: referrers from these count as internal navigation.
+SITE_HOSTS = "pratishtha-abrol.github.io,pratishthaabrol.me,www.pratishthaabrol.me"
+DIGEST_TO = "pratishthaabrol@gmail.com"
+FROM_EMAIL = "Site stats <onboarding@resend.dev>"
+
+# Secrets (set with `npx wrangler secret put NAME`, never committed):
+#   RESEND_API_KEY   API key from resend.com
+#   IP_SALT          any long random string

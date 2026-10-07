@@ -1,0 +1,18 @@
+{
+  "name": "pa-site-stats",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "wrangler dev --var DEV_ROUTES:1 --port 8787",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "db:init:local": "wrangler d1 execute pa-site-stats --local --file=schema.sql",
+    "db:init:remote": "wrangler d1 execute pa-site-stats --remote --file=schema.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261007.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.148.0"
+  }
+}
