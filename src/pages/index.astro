@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Splash from '../components/Splash.astro';
 import Hero from '../components/Hero.astro';
 import StatusPill from '../components/StatusPill.astro';
 import Section from '../components/Section.astro';
@@ -30,6 +31,7 @@ const jsonLd = {
   description="Backend and infrastructure engineer: Kubernetes, backends, AI infrastructure and quantum information research. Pick the lens that fits."
   ogImage="/og/index.png"
 >
+  <Splash />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Nav
     links={[

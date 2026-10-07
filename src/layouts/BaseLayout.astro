@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Starfield from '../components/Starfield.astro';
 
 interface Props {
   title: string;
@@ -53,6 +54,7 @@ const image = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <slot name="head" />
   </head>
   <body style={`--accent: ${accent}`}>
+    <Starfield />
     <slot />
   </body>
 </html>

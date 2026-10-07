@@ -1,0 +1,112 @@
+---
+// Intro shown on every load of "/": the favicon draws itself, then the whole
+// overlay dissolves into the page. Pure CSS (no JS); the page is fully rendered
+// underneath, so crawlers and no-JS readers are unaffected. Skipped entirely
+// for prefers-reduced-motion.
+---
+
+<div class="splash" aria-hidden="true">
+  <svg class="logo" viewBox="0 0 64 64" width="160" height="160">
+    <rect class="tile" x="1" y="1" width="62" height="62" rx="14" fill="#0E1116" stroke="#232A35" stroke-width="2"></rect>
+    <g transform="translate(32 32) scale(1.2) translate(-32 -35.5)" fill="none" stroke="#E6EAF0" stroke-width="4" stroke-linejoin="round">
+      <path class="draw d1" pathLength="1" d="M14 47V24H20a6 6 0 0 1 0 12H14"></path>
+      <circle class="draw d2" pathLength="1" cx="44" cy="30" r="6"></circle>
+      <path class="draw d3" pathLength="1" d="M50 24V36"></path>
+      <circle class="dot" cx="32" cy="34" r="2.5" fill="#6EE7A8" stroke="none"></circle>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .splash {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    animation: dissolve 0.7s ease-in 1.75s forwards;
+  }
+  .logo {
+    overflow: visible;
+    animation: lift 0.7s ease-in 1.75s forwards;
+  }
+  .tile {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s forwards;
+  }
+  .draw {
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 1;
+    animation: draw 0.45s ease-out forwards;
+  }
+  .d1 {
+    animation-delay: 0.3s;
+  }
+  .d2 {
+    animation-delay: 1s;
+  }
+  .d3 {
+    animation-delay: 1.25s;
+    animation-duration: 0.25s;
+  }
+  .dot {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    opacity: 0;
+    animation: drop 0.5s ease-in 0.72s forwards;
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes drop {
+    0% {
+      opacity: 0;
+      transform: translateY(-14px);
+    }
+    55% {
+      opacity: 1;
+      transform: translateY(1px) scale(1.35, 0.65);
+    }
+    78% {
+      transform: translateY(-2px) scale(0.9, 1.15);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes dissolve {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+  @keyframes lift {
+    to {
+      transform: scale(1.15);
+      filter: blur(6px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .splash {
+      display: none;
+    }
+  }
+</style>

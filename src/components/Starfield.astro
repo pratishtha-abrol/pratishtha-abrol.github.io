@@ -1,0 +1,195 @@
+---
+// Decorative background: drifting dots that parallax with the cursor/scroll and
+// part around the pointer, joined by faint accent lines. Progressive
+// enhancement only: all content is readable without it.
+---
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+
+<style>
+  #starfield {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('starfield') as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext('2d');
+
+  if (canvas && ctx) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const RADIUS = 130; // cursor influence
+    const LINK = 115; // max distance between linked dots
+
+    interface Star {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      r: number;
+      depth: number; // 0.2–1: parallax strength
+      alpha: number;
+      speed: number; // twinkle
+      phase: number;
+      ox: number; // spring offset from the cursor push
+      oy: number;
+    }
+
+    let w = 0;
+    let h = 0;
+    let stars: Star[] = [];
+    let accent = '110, 231, 168';
+    const mouse = { x: -9999, y: -9999 };
+    const look = { x: 0, y: 0, tx: 0, ty: 0 }; // smoothed parallax, -0.5..0.5
+
+    const readAccent = () => {
+      const hex = getComputedStyle(document.body).getPropertyValue('--accent').trim().replace('#', '');
+      if (hex.length === 6) {
+        accent = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(', ');
+      }
+    };
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.min(230, Math.round((w * h) / (w < 640 ? 10000 : 6500)));
+      stars = Array.from({ length: count }, () => {
+        const depth = 0.2 + Math.random() * 0.8;
+        return {
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.12,
+          r: 0.6 + depth * 1.3,
+          depth,
+          alpha: 0.4 + depth * 0.5,
+          speed: 0.0006 + Math.random() * 0.0014,
+          phase: Math.random() * Math.PI * 2,
+          ox: 0,
+          oy: 0,
+        };
+      });
+    };
+
+    const wrap = (v: number, max: number) => ((v % max) + max) % max;
+
+    const frame = (t: number) => {
+      ctx.clearRect(0, 0, w, h);
+      look.x += (look.tx - look.x) * 0.05;
+      look.y += (look.ty - look.y) * 0.05;
+      const scroll = window.scrollY;
+      const near: Array<{ x: number; y: number; k: number }> = [];
+
+      for (const s of stars) {
+        if (!reduced) {
+          s.x = wrap(s.x + s.vx, w);
+          s.y = wrap(s.y + s.vy, h);
+        }
+        const px = wrap(s.x - look.x * 60 * s.depth, w);
+        const py = wrap(s.y - look.y * 60 * s.depth - scroll * 0.06 * s.depth, h);
+
+        // Part around the cursor, then spring back.
+        let tx = 0;
+        let ty = 0;
+        const dx = px - mouse.x;
+        const dy = py - mouse.y;
+        const d = Math.hypot(dx, dy);
+        if (d < RADIUS && d > 0.01) {
+          const k = 1 - d / RADIUS;
+          tx = (dx / d) * k * 34;
+          ty = (dy / d) * k * 34;
+        }
+        s.ox += (tx - s.ox) * 0.1;
+        s.oy += (ty - s.oy) * 0.1;
+
+        const x = px + s.ox;
+        const y = py + s.oy;
+        const tw = reduced ? 1 : 0.65 + 0.35 * Math.sin(t * s.speed + s.phase);
+        ctx.fillStyle = `rgba(211, 217, 226, ${s.alpha * tw})`;
+        ctx.beginPath();
+        ctx.arc(x, y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (d < RADIUS * 1.15) near.push({ x, y, k: 1 - Math.min(d / (RADIUS * 1.15), 1) });
+      }
+
+      // Constellation lines between dots close to the cursor.
+      ctx.lineWidth = 1;
+      for (let i = 0; i < near.length; i++) {
+        for (let j = i + 1; j < near.length; j++) {
+          const a = near[i];
+          const b = near[j];
+          const dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if (dist < LINK) {
+            ctx.strokeStyle = `rgba(${accent}, ${(1 - dist / LINK) * Math.min(a.k, b.k) * 0.85})`;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    let raf = 0;
+    const loop = (t: number) => {
+      frame(t);
+      raf = requestAnimationFrame(loop);
+    };
+    const start = () => {
+      if (!raf) raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+
+    const init = () => {
+      readAccent();
+      resize();
+      let resizeTimer: number | undefined;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => {
+          resize();
+          if (reduced) frame(0);
+        }, 150);
+      });
+
+      if (reduced) {
+        frame(0); // one static frame, no motion or interaction
+        return;
+      }
+
+      window.addEventListener(
+        'pointermove',
+        (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+          look.tx = e.clientX / w - 0.5;
+          look.ty = e.clientY / h - 0.5;
+        },
+        { passive: true },
+      );
+      document.documentElement.addEventListener('pointerleave', () => {
+        mouse.x = mouse.y = -9999;
+        look.tx = look.ty = 0;
+      });
+      document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+      start();
+    };
+
+    // Don't compete with first paint.
+    if ('requestIdleCallback' in window) requestIdleCallback(init, { timeout: 800 });
+    else setTimeout(init, 200);
+  }
+</script>
