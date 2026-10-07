@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import { site } from '../../data/site';
+import { getPosts } from '../../data/posts';
+
+const posts = await getPosts();
+const roman = (n: number) =>
+  ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][n] ?? String(n);
+---
+
+<BaseLayout
+  title="Writing — Pratishtha Abrol"
+  description="Notes from breaking things: postmortems and write-ups on infrastructure, backends and AI systems."
+  accent="#F58FA3"
+  ogImage="/og/writing.png"
+  typewriter
+>
+  <Nav
+    suffix="/writing"
+    links={[
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+      { label: 'Research', href: '/research/' },
+    ]}
+  />
+  <main>
+    <Hero eyebrow="WRITING" top={96} bottom={40} h1Max={820}>
+      Notes from <span class="accent">breaking things.</span>
+    </Hero>
+
+    <Section label="Contents" top={0} bottom={40} flow="block">
+      <div class="contents-head">
+        <span>Contents</span>
+        <span>{posts.length} {posts.length === 1 ? 'piece' : 'pieces'}</span>
+      </div>
+      <ol class="contents">
+        {posts.map((p, i) => (
+          <li>
+            <a href={p.href} class="entry">
+              <span class="num">{roman(i + 1)}</span>
+              <span class="title">{p.title}</span>
+              <span class="leader" aria-hidden="true"></span>
+              <time datetime={p.iso}>{p.date}</time>
+            </a>
+            {p.summary && <p class="summary">{p.summary}</p>}
+          </li>
+        ))}
+      </ol>
+    </Section>
+
+    <ContactCTA
+      top={64}
+      heading="Want to talk about something here?"
+      lead="Freelance projects, long-term contracts, or full-time remote roles."
+      headingMax={720}
+      links={[
+        { label: 'LinkedIn ↗', href: site.linkedin },
+        { label: 'GitHub ↗', href: site.github },
+        { label: 'All work →', href: '/' },
+      ]}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contents-head {
+    max-width: 760px;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-top: 4px double var(--border-strong);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .contents {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 760px;
+  }
+  li {
+    padding: 24px 0 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .entry {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .num {
+    flex: 0 0 4ch;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .title {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.3;
+    min-width: 0;
+  }
+  .entry:hover .title {
+    color: var(--accent);
+  }
+  .leader {
+    flex: 1 1 24px;
+    min-width: 24px;
+    border-bottom: 2px dotted var(--border-strong);
+    transform: translateY(-4px);
+  }
+  time {
+    color: var(--text-subtle);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .summary {
+    margin: 8px 0 0 calc(4ch + 14px);
+    max-width: 58ch;
+    color: var(--text-muted);
+    font-size: 15px;
+    font-style: italic;
+  }
+  @media (max-width: 560px) {
+    .entry {
+      flex-wrap: wrap;
+      row-gap: 4px;
+    }
+    .title {
+      flex: 1 1 calc(100% - 5ch);
+    }
+    .leader {
+      display: none;
+    }
+    time {
+      margin-left: calc(4ch + 14px);
+    }
+  }
+</style>

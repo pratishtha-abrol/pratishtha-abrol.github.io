@@ -8,12 +8,17 @@ interface Props {
   accent?: string;
   /** Site-relative path, e.g. "/og/infra.png". Omitted until the image exists. */
   ogImage?: string;
+  /** Courier Prime in place of IBM Plex (used on /writing). */
+  typewriter?: boolean;
 }
 
-const { title, description, accent = '#6EE7A8', ogImage } = Astro.props;
+const { title, description, accent = '#6EE7A8', ogImage, typewriter = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const fontsHref =
-  'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap';
+const fontsHref = typewriter
+  ? 'https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap'
+  : 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap';
+const typewriterStack = "'Courier Prime', 'Courier New', Courier, monospace";
+const bodyStyle = `--accent: ${accent}${typewriter ? `;--font-sans: ${typewriterStack};--font-mono: ${typewriterStack}` : ''}`;
 const image = ogImage ? new URL(ogImage, Astro.site) : undefined;
 ---
 
@@ -53,7 +58,7 @@ const image = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
     <slot name="head" />
   </head>
-  <body style={`--accent: ${accent}`}>
+  <body style={bodyStyle}>
     <Starfield />
     <slot />
   </body>

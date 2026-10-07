@@ -11,6 +11,7 @@ const pages = [
   { file: 'infra', title: 'Platform & Reliability Engineer', accent: '#6EE7A8', path: '/infra' },
   { file: 'backend', title: 'Backend & Full-stack', accent: '#7CC4FA', path: '/backend' },
   { file: 'ai', title: 'AI Infrastructure', accent: '#C4A7FF', path: '/ai' },
+  { file: 'writing', title: 'Writing', accent: '#F58FA3', path: '/writing' },
   { file: 'research', title: 'Quantum Information Research', accent: '#F2B866', path: '/research' },
 ];
 

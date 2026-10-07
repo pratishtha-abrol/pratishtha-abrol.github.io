@@ -13,8 +13,9 @@ import { Image } from 'astro:assets';
 import portrait from '../assets/portrait.png';
 import { site } from '../data/site';
 import { lenses, background } from '../data/lenses';
-import { posts } from '../data/posts';
+import { getPosts } from '../data/posts';
 
+const posts = await getPosts();
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',

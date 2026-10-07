@@ -19,8 +19,9 @@ import { experience } from '../data/experience';
 import { services } from '../data/services';
 import { ferrum, alsoProjects } from '../data/projects';
 import { infraStats, infraTerminal } from '../data/proof';
-import { posts } from '../data/posts';
+import { getPosts } from '../data/posts';
 
+const posts = (await getPosts()).slice(0, 3);
 const hasPosts = posts.length > 0;
 const certs = [...(site.certs.ckaInProgress ? ['CKA (in progress)'] : []), ...alsoProjects.certs];
 const lead = `Freelance projects, long-term contracts, or full-time remote roles.${
