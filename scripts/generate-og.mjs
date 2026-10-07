@@ -7,7 +7,7 @@ import { join } from 'node:path';
 
 const chrome = process.env.CHROME ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const pages = [
-  { file: 'index', title: 'Pratishtha Abrol', accent: '#6EE7A8', path: '' },
+  { file: 'index', title: 'Pratishtha Abrol', accent: '#F58FA3', path: '' },
   { file: 'infra', title: 'Platform & Reliability Engineer', accent: '#6EE7A8', path: '/infra' },
   { file: 'backend', title: 'Backend & Full-stack', accent: '#7CC4FA', path: '/backend' },
   { file: 'ai', title: 'AI Infrastructure', accent: '#C4A7FF', path: '/ai' },
