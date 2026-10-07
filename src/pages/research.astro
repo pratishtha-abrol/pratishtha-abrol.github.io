@@ -91,12 +91,12 @@ const areas: Array<[string, string]> = [
       lead="I'm open to research-engineering roles and collaborations where formal depth meets production systems."
       headingMax={760}
       leadMax={620}
-      buttons={[{ label: 'LinkedIn', href: site.linkedin }]}
+      buttons={[{ label: 'LinkedIn', href: site.linkedin, track: 'linkedin' }]}
       links={[
         ...(site.scholar ? [{ label: 'Google Scholar ↗', href: site.scholar }] : []),
         ...(site.orcid ? [{ label: 'ORCID ↗', href: site.orcid }] : []),
-        { label: 'GitHub ↗', href: site.github },
-        ...(site.resumes.research ? [{ label: 'Résumé (PDF) ↗', href: site.resumes.research }] : []),
+        { label: 'GitHub ↗', href: site.github, track: 'github' },
+        ...(site.resumes.research ? [{ label: 'Résumé (PDF) ↗', href: site.resumes.research, track: 'resume-research' }] : []),
         { label: 'All work →', href: '/' },
       ]}
     />

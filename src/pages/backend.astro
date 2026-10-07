@@ -45,7 +45,7 @@ const resume = site.resumes.backend;
       </Fragment>
       <Fragment slot="actions">
         <Button href="#work">See the work</Button>
-        {resume && <Button href={resume} variant="secondary">Download résumé</Button>}
+        {resume && <Button href={resume} variant="secondary" track="resume-backend">Download résumé</Button>}
       </Fragment>
     </Hero>
 
@@ -75,8 +75,8 @@ const resume = site.resumes.backend;
       lead="Freelance builds, long-term contracts, or full-time remote backend roles."
       headingMax={720}
       links={[
-        { label: 'LinkedIn ↗', href: site.linkedin },
-        { label: 'GitHub ↗', href: site.github },
+        { label: 'LinkedIn ↗', href: site.linkedin, track: 'linkedin' },
+        { label: 'GitHub ↗', href: site.github, track: 'github' },
         { label: 'All work →', href: '/' },
       ]}
     />

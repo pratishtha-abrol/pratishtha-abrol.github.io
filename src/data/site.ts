@@ -20,6 +20,9 @@ export const site = {
   thesisPdf: null as string | null,
   researchTools: 'Python · Qiskit · Cirq · Mathematica' as string | null,
   certs: { ckaInProgress: true },
+  // URL of the deployed stats Worker (see worker/README.md). null = no tracking and no intro form.
+  // Set it with the PUBLIC_STATS_ENDPOINT build variable, e.g. https://pa-site-stats.<you>.workers.dev
+  stats: { endpoint: (import.meta.env.PUBLIC_STATS_ENDPOINT as string | undefined) || null } as { endpoint: string | null },
   crucible: {
     repo: 'https://github.com/pratishtha-abrol/crucible' as string | null,
     writeup: null as string | null,

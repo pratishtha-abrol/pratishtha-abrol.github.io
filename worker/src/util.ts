@@ -6,6 +6,8 @@ export interface Env {
   FROM_EMAIL: string;
   IP_SALT: string;
   RESEND_API_KEY?: string;
+  /** Optional secret: lets you POST /admin/digest to send the digest immediately (to test email delivery). */
+  ADMIN_TOKEN?: string;
   /** "1" only under `npm run dev`: enables /__digest and /__seed. */
   DEV_ROUTES?: string;
 }

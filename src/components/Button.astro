@@ -3,11 +3,13 @@ interface Props {
   href: string;
   variant?: 'primary' | 'secondary';
   size?: 'lg' | 'sm';
+  /** Click-tracking id. */
+  track?: string;
 }
-const { href, variant = 'primary', size = 'lg' } = Astro.props;
+const { href, variant = 'primary', size = 'lg', track } = Astro.props;
 ---
 
-<a href={href} class={`btn ${variant} ${size}`}><slot /></a>
+<a href={href} class={`btn ${variant} ${size}`} data-track={track}><slot /></a>
 
 <style>
   .btn {

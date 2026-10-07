@@ -150,6 +150,13 @@ export default {
       return new Response(`seeded ${rows.length}`);
     }
 
+    if (request.method === 'POST' && url.pathname === '/admin/digest') {
+      const token = (request.headers.get('Authorization') ?? '').replace(/^Bearer /, '');
+      if (!env.ADMIN_TOKEN || token !== env.ADMIN_TOKEN) return new Response('Unauthorized', { status: 401 });
+      await sendMail(env, await buildDigest(env));
+      return new Response('Digest sent.\n');
+    }
+
     if (request.method === 'POST') {
       if (url.pathname === '/v') return recordEvent(request, env, 'view');
       if (url.pathname === '/c') return recordEvent(request, env, 'click');

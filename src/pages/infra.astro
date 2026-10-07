@@ -56,7 +56,7 @@ const resume = site.resumes.infra;
       </Fragment>
       <Fragment slot="actions">
         <Button href="#services">See how I can help</Button>
-        {resume && <Button href={resume} variant="secondary">Download résumé</Button>}
+        {resume && <Button href={resume} variant="secondary" track="resume-infra">Download résumé</Button>}
       </Fragment>
       <TerminalCard slot="aside" command="kubectl describe engineer pratishtha" rows={infraTerminal} />
     </Hero>
@@ -135,9 +135,9 @@ const resume = site.resumes.infra;
       headingMax={760}
       leadMax={620}
       links={[
-        { label: 'LinkedIn ↗', href: site.linkedin },
-        { label: 'GitHub ↗', href: site.github },
-        ...(resume ? [{ label: 'Résumé (PDF) ↗', href: resume }] : []),
+        { label: 'LinkedIn ↗', href: site.linkedin, track: 'linkedin' },
+        { label: 'GitHub ↗', href: site.github, track: 'github' },
+        ...(resume ? [{ label: 'Résumé (PDF) ↗', href: resume, track: 'resume-infra' }] : []),
       ]}
     />
   </main>

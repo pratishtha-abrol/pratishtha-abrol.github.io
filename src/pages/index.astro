@@ -74,8 +74,8 @@ const jsonLd = {
       heading="Not sure which fits? Just tell me the problem."
       lead="Freelance projects, long-term contracts, or full-time remote roles."
       links={[
-        { label: 'LinkedIn ↗', href: site.linkedin },
-        { label: 'GitHub ↗', href: site.github },
+        { label: 'LinkedIn ↗', href: site.linkedin, track: 'linkedin' },
+        { label: 'GitHub ↗', href: site.github, track: 'github' },
         ...(posts.length > 0 ? [{ label: 'Writing ↗', href: '/writing/' }] : []),
       ]}
     />

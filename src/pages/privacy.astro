@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Privacy — Pratishtha Abrol"
+  description="What this site counts about visits, what it doesn't, and what happens to a message sent through the intro form."
+  accent="#E48BF2"
+>
+  <Nav
+    links={[
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+      { label: 'Research', href: '/research/' },
+    ]}
+  />
+  <main class="page">
+    <p class="eyebrow">PRIVACY</p>
+    <h1>What this site counts.</h1>
+    <p class="lead">
+      I keep a simple count of visits so I know whether the site is useful. No cookies, no ad networks, no
+      fingerprinting, and no third-party trackers.
+    </p>
+
+    <h2>What I record about a visit</h2>
+    <ul>
+      <li>The page you opened, the time, and the site that linked to me (just its name, like linkedin.com).</li>
+      <li>A <code>?ref=</code> tag if you arrived through a link I tagged, for example one I put in an application.</li>
+      <li>Clicks on key links: email, LinkedIn, GitHub and the résumé downloads.</li>
+      <li>Your country and city, your device type (mobile, tablet or desktop), and the name of the network the visit came from (for example an internet provider or a company network). All of this is worked out from your IP address.</li>
+    </ul>
+
+    <h2>What I don't record</h2>
+    <ul>
+      <li>Your IP address is never stored. It is used for a moment to work out the items above and to build an anonymous code that changes every day, so a repeat visit on the same day isn't counted twice. That code cannot be traced back to you.</li>
+      <li>Nothing is stored in a cookie. The <code>?ref=</code> tag is kept in your browser's session storage until you close the tab.</li>
+      <li>If your browser sends Do Not Track or Global Privacy Control, nothing is recorded at all.</li>
+    </ul>
+
+    <h2>If you use the intro form</h2>
+    <p>
+      The name, email, company, message and topic you send, plus the same coarse location and network details as
+      above, are emailed to me and stored so I can reply. I use them only to answer you. Write to
+      <a href={`mailto:${site.email}`}>{site.email}</a> and I'll delete them.
+    </p>
+
+    <h2>How long I keep things</h2>
+    <p>Visit and click records are deleted after 90 days. Intro-form messages are kept until you ask me to delete them. Once a week I receive a summary of the counts by email.</p>
+
+    <h2>Who handles the data</h2>
+    <p>
+      This site is hosted on GitHub Pages. Visit counts and intro messages are handled by a small program of mine
+      running on Cloudflare, and emails are sent through Resend. Fonts are loaded from Google Fonts.
+    </p>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: calc(68ch + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 80px var(--gutter) 96px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  h1 {
+    margin-top: 12px;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .lead {
+    margin-top: 20px;
+    font-size: 20px;
+    color: var(--text-muted);
+  }
+  h2 {
+    margin-top: 48px;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  p,
+  ul {
+    margin-top: 14px;
+    color: var(--text-muted);
+  }
+  ul {
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--text-body);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05em 0.35em;
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+// Privacy-friendly first-party stats: one beacon per page view plus clicks on
+// elements marked data-track. No cookies. Skips Do-Not-Track / Global Privacy
+// Control visitors and localhost. Rendered only when site.stats.endpoint is set.
+import { site } from '../data/site';
+const endpoint = site.stats.endpoint;
+---
+
+{endpoint && <div id="stats" data-endpoint={endpoint} hidden></div>}
+
+<script>
+  const el = document.getElementById('stats');
+  const endpoint = el?.dataset.endpoint?.replace(/\/$/, '');
+
+  if (endpoint) {
+    const nav = navigator as Navigator & { globalPrivacyControl?: boolean };
+    const optedOut = nav.doNotTrack === '1' || nav.globalPrivacyControl === true;
+    let debug = false;
+    try {
+      debug = localStorage.getItem('statsDebug') === '1';
+    } catch {}
+    const local = ['localhost', '127.0.0.1'].includes(location.hostname) && !debug;
+
+    if (!optedOut && !local) {
+      // ?ref= tag from a tagged link, remembered for this tab's visit only.
+      let ref: string | null = new URLSearchParams(location.search).get('ref');
+      try {
+        if (ref) sessionStorage.setItem('ref', ref);
+        else ref = sessionStorage.getItem('ref');
+      } catch {}
+
+      const send = (path: string, data: Record<string, unknown>) => {
+        const body = JSON.stringify({ ...data, p: location.pathname, r: ref });
+        // text/plain keeps this a "simple" request: no CORS preflight.
+        if (!(navigator.sendBeacon && navigator.sendBeacon(endpoint + path, new Blob([body], { type: 'text/plain' })))) {
+          fetch(endpoint + path, { method: 'POST', body, keepalive: true, mode: 'cors' }).catch(() => {});
+        }
+      };
+
+      send('/v', { rf: document.referrer });
+      document.addEventListener('click', (e) => {
+        const target = (e.target as Element | null)?.closest<HTMLElement>('[data-track]');
+        if (target?.dataset.track) send('/c', { t: target.dataset.track });
+      });
+    }
+  }
+</script>

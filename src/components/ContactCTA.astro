@@ -1,6 +1,7 @@
 ---
 import Button from './Button.astro';
 import Eyebrow from './Eyebrow.astro';
+import IntroForm from './IntroForm.astro';
 import { site } from '../data/site';
 import type { Link } from '../data/types';
 
@@ -29,12 +30,13 @@ const secondary = [...(site.calendar ? [{ label: 'Book a 20-min intro call', hre
     <h2 style={`max-width:${headingMax}px`}>{heading}</h2>
     <p style={`max-width:${leadMax}px`}>{lead}</p>
     <div class="buttons">
-      <Button href={`mailto:${site.email}`}>{site.email}</Button>
-      {secondary.map((b) => <Button href={b.href} variant="secondary">{b.label}</Button>)}
+      <Button href={`mailto:${site.email}`} track="email">{site.email}</Button>
+      {secondary.map((b) => <Button href={b.href} variant="secondary" track={b.track}>{b.label}</Button>)}
     </div>
     <div class="links">
-      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      {links.map((l) => <a href={l.href} data-track={l.track}>{l.label}</a>)}
     </div>
+    <IntroForm />
   </div>
 </section>
 
