@@ -9,7 +9,7 @@ const reply = site.responseTime ? ` I usually reply within ${site.responseTime}.
 ---
 
 {endpoint && (
-  <details class="intro">
+  <details class="intro" open>
     <summary>Hiring or have a project? Introduce yourself</summary>
     <form data-endpoint={endpoint} data-email={site.email}>
       <p class="hint">Tell me who you are and what you need.{reply}</p>
@@ -48,8 +48,8 @@ const reply = site.responseTime ? ` I usually reply within ${site.responseTime}.
     list-style: none;
     padding: 10px 0;
     color: var(--accent);
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
   }
   summary::-webkit-details-marker {
     display: none;
