@@ -122,33 +122,6 @@ export const alsoProjects = {
   certs: ['Claude Code in Action (Anthropic)', 'Linux & Git (Coursera)'],
 };
 
-// AI page: Crucible featured project. Benchmarks and links come from site.crucible.
-export const crucible = {
-  status: 'In progress',
-  title: 'Crucible: a self-hosted LLM inference gateway on Kubernetes.',
-  lead: 'An OpenAI-compatible gateway in front of self-hosted models, built for the problems teams hit once an LLM feature has real traffic: cost, latency, fairness between tenants, and safe model upgrades.',
-  flow: {
-    main: [
-      { label: 'Client · OpenAI SDK' },
-      { label: 'Go gateway', key: true },
-      { label: 'Router · canary' },
-      { label: 'Model servers', key: true },
-    ],
-    supporting: [
-      'Redis · token rate limits',
-      'Postgres · usage & keys',
-      'Prometheus · TTFT, tokens/s',
-      'KEDA · queue-based scaling',
-    ],
-  } satisfies ArchitectureFlow,
-  features: [
-    { title: 'Streaming proxy', body: 'OpenAI-compatible API with token streaming, so existing SDKs work unchanged.' },
-    { title: 'Token-aware limits', body: 'Per-key budgets measured in tokens, not requests, with usage accounting.' },
-    { title: 'Scale on real load', body: 'Autoscaling on queue depth and in-flight requests instead of CPU.' },
-    { title: 'Safe model upgrades', body: 'Canary routing between model versions, gated by an eval suite in CI.' },
-  ],
-};
-
 // AI page: ML pipelines section.
 export const mlPipelines: ProjectCard[] = [
   {

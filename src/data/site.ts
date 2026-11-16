@@ -23,13 +23,4 @@ export const site = {
   // URL of the deployed stats Worker (see worker/README.md). null = no tracking and no intro form.
   // Set it with the PUBLIC_STATS_ENDPOINT build variable, e.g. https://pa-site-stats.<you>.workers.dev
   stats: { endpoint: (import.meta.env.PUBLIC_STATS_ENDPOINT as string | undefined) || null } as { endpoint: string | null },
-  crucible: {
-    repo: 'https://github.com/pratishtha-abrol/crucible' as string | null,
-    writeup: null as string | null,
-    benchmarks: {
-      ttftP95: null as string | null,
-      overhead: null as string | null,
-      costPer1M: null as string | null,
-    },
-  },
 };
