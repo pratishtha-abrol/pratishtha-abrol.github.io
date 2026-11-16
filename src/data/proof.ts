@@ -11,7 +11,7 @@ export const infraStats: Stat[] = [
     value: '0 downtime',
     caption: 'FIPS 140-2 compliant DNS cutover into production Kubernetes networking. Adopted by 2 teams.',
   },
-  { value: '<5ms', caption: 'Client acknowledgement in Ferrum, independent of downstream endpoint latency.' },
+  { value: '0 lost', caption: 'Accepted events lost in Ferrum crash tests, including a kill -9 mid-delivery that recovered in 2.6 s.' },
 ];
 
 export const backendStats: Stat[] = [
@@ -23,7 +23,7 @@ export const backendStats: Stat[] = [
     value: '12 models',
     caption: 'MongoDB schema designed end to end for vehicles, customers, jobs and multi-tier billing.',
   },
-  { value: '<5ms', caption: 'API response in Ferrum after moving delivery to an async worker behind a queue.' },
+  { value: '<6ms', caption: 'p95 ingest latency in Ferrum at up to 900 events/s, because delivery happens off the request path.' },
 ];
 
 export const infraTerminal: Array<[key: string, value: string]> = [

@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PostList from '../../components/PostList.astro';
+import { posts } from '../../data/posts';
+---
+
+<BaseLayout
+  title="Writing — Pratishtha Abrol"
+  description="Engineering notes on reliability, concurrency and measurement: what broke, how I found it, and why I chose the design."
+  accent="#6EE7A8"
+>
+  <Nav
+    links={[
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+      { label: 'Research', href: '/research/' },
+    ]}
+  />
+  <main class="page">
+    <p class="eyebrow">WRITING</p>
+    <h1>Notes from breaking things.</h1>
+    <p class="lead">
+      Each post is a real problem I hit, what I measured, what turned out to be wrong, and why I chose the design I did.
+    </p>
+    <div class="list"><PostList posts={posts} /></div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: calc(76ch + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 80px var(--gutter) 96px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  h1 {
+    margin-top: 12px;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .lead {
+    margin-top: 20px;
+    font-size: 20px;
+    color: var(--text-muted);
+  }
+  .list {
+    margin-top: 40px;
+  }
+</style>

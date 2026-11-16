@@ -45,10 +45,13 @@ export const backendFeatured: FeaturedProject = {
 export const backendProjects: ProjectCard[] = [
   {
     meta: 'Personal project · 2026',
-    title: 'Ferrum webhook API',
+    title: 'Ferrum webhook delivery platform',
     summary:
-      'FastAPI gateway and async worker over Redis and PostgreSQL. Cache-aside lookups cut from 22ms to 1.2ms on hits, with invalidation on every write.',
-    links: [{ label: 'View code ↗', href: 'https://github.com/ferrum-webhooks/ferrum-webhook-relay-core' }],
+      'FastAPI gateway and crash-safe worker over PostgreSQL and Redis: transactional outbox, leases, retries scheduled in the database. About 990 events/s with 4 API processes on one laptop.',
+    links: [
+      { label: 'Engineering notes ↗', href: 'https://github.com/ferrum-webhooks/docs/blob/main/engineering/README.md' },
+      { label: 'Gateway repo ↗', href: 'https://github.com/ferrum-webhooks/ferrum-webhook-gateway' },
+    ],
   },
   {
     meta: 'Oracle · 2024 – 2026',
@@ -68,35 +71,43 @@ export const backendProjects: ProjectCard[] = [
 
 // Infra page: Ferrum case study.
 export const ferrum = {
-  title: 'Ferrum: a webhook delivery platform, built in the open.',
-  lead: 'Ingestion is decoupled from delivery, so a slow customer endpoint never slows down the sender.',
+  title: 'Ferrum: a webhook delivery platform that does not lose events.',
+  lead: 'An event and its pending deliveries are saved in one database transaction. A relay, a Redis stream and crash-safe workers do the rest, so a slow or broken receiver never slows the sender.',
   flow: {
     main: [
       { label: 'Sender' },
       { label: 'FastAPI gateway', key: true },
-      { label: 'Redis queue' },
+      { label: 'Postgres outbox' },
+      { label: 'Redis stream' },
       { label: 'Async worker', key: true },
-      { label: 'Endpoint' },
+      { label: 'Receiver' },
     ],
-    supporting: ['PostgreSQL · persistence', 'Prometheus · metrics', 'Kubernetes · HPA, probes, limits'],
+    supporting: [
+      'PostgreSQL · system of record',
+      'OpenTelemetry · one trace per event',
+      'Prometheus · metrics',
+      'Kubernetes · Helm chart, default-deny network policy (validated offline)',
+    ],
   } satisfies ArchitectureFlow,
   columns: [
     {
       title: 'Built',
-      body: 'Gateway + async worker over Redis, PostgreSQL, Kubernetes with autoscaling, Prometheus metrics, and GitHub Actions → GHCR → cluster deploys.',
+      body: 'Transactional outbox, at-least-once delivery with leases and crash recovery, retries scheduled in the database, signed deliveries (Standard Webhooks), an SSRF guard, tenant isolation, traces and metrics, and a Kubernetes chart with a manifest security checker.',
     },
     {
       title: 'Measured',
-      body: '135 req/s at 0% errors (k6, 50 VUs, 60s). Client ack under 5ms. Cache-aside lookups from 22ms to 1.2ms on hits.',
+      body: 'About 990 events/s with 4 API processes and p95 under 6 ms up to 900 events/s, on one laptop with everything co-located. No lost events in the crash tests. Login memory cut from 806 MB to 106 MB. A deadlock at 200 clients fixed (6 of 120 requests before, 120 of 120 after).',
     },
     {
-      title: 'Next',
-      body: 'AWS with EKS + Terraform, deliberate failure injection with written postmortems, then Vault, ArgoCD and mTLS.',
+      title: 'Honest limits',
+      body: 'One database and one Redis, no backups, no encryption between components. The Helm chart and network policies are checked offline but not yet installed on a real cluster. The docs list future improvements.',
     },
   ],
   links: [
-    { label: 'Core repo ↗', href: 'https://github.com/ferrum-webhooks/ferrum-webhook-relay-core' },
-    { label: 'Infra repo ↗', href: 'https://github.com/ferrum-webhooks/infra' },
+    { label: 'Engineering notes ↗', href: 'https://github.com/ferrum-webhooks/docs/blob/main/engineering/README.md' },
+    { label: 'Gateway ↗', href: 'https://github.com/ferrum-webhooks/ferrum-webhook-gateway' },
+    { label: 'Worker ↗', href: 'https://github.com/ferrum-webhooks/ferrum-webhook-worker' },
+    { label: 'Infra ↗', href: 'https://github.com/ferrum-webhooks/infra' },
   ] as Link[],
 };
 

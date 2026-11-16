@@ -1,0 +1,91 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('writing');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const date = entry.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+
+<BaseLayout title={`${entry.data.title} — Pratishtha Abrol`} description={entry.data.description} accent="#6EE7A8">
+  <Nav
+    links={[
+      { label: 'Writing', href: '/writing/' },
+      { label: 'Infra', href: '/infra/' },
+      { label: 'Backend', href: '/backend/' },
+      { label: 'AI infra', href: '/ai/' },
+    ]}
+  />
+  <main class="page">
+    <p class="eyebrow"><a href="/writing/">WRITING</a> · {date}</p>
+    <h1>{entry.data.title}</h1>
+    <article class="prose"><Content /></article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: calc(70ch + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 80px var(--gutter) 96px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .eyebrow a {
+    text-decoration: none;
+  }
+  h1 {
+    margin-top: 12px;
+    font-size: clamp(2rem, 4.6vw, 2.8rem);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .prose {
+    margin-top: 32px;
+    color: var(--text-body);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-top: 16px;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .prose :global(h2) {
+    margin-top: 44px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .prose :global(a) {
+    color: var(--accent);
+  }
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05em 0.35em;
+  }
+</style>
